@@ -11,7 +11,16 @@ This chart is primarily intended to be used for YARN and MapReduce job execution
 To install the chart with the release name `hadoop` that utilizes 50% of the available node resources:
 
 ```
-$ helm install --name hadoop $(stable/hadoop/tools/calc_resources.sh 50) stable/hadoop
+$ helm install \
+  --name hadoop-1.0.0 \
+  --set image.tag=hadoop-1.0.0  \
+  ./*
+
+```    
+
+port fordwar to the Yarn UI    
+```
+$ kubectl port-forward hadoop-hadoop-yarn-rm-0 8088:8088
 ```
 
 > Note that you need at least 2GB of free memory per NodeManager pod, if your cluster isn't large enough, not all pods will be scheduled.
@@ -23,12 +32,12 @@ The optional [`calc_resources.sh`](./tools/calc_resources.sh) script is used as 
 To install the chart with persistent volumes:
 
 ```
-$ helm install --name hadoop $(stable/hadoop/tools/calc_resources.sh 50) \
+$ helm install --name hadoop . \
   --set persistence.nameNode.enabled=true \
   --set persistence.nameNode.storageClass=standard \
   --set persistence.dataNode.enabled=true \
   --set persistence.dataNode.storageClass=standard \
-  stable/hadoop
+  --set image.tag=hadoop-1.0.0
 ```
 
 > Change the value of `storageClass` to match your volume driver. `standard` works for Google Container Engine clusters.
