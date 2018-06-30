@@ -80,10 +80,10 @@ persistence:
 
 zeppelin:
   image: dylanmei/zeppelin:0.7.2
-  resources:
-    limits:
-      memory: "1024Mi"
-      cpu: "2000m"
+  # resources:
+  #   limits:
+  #     memory: "1024Mi"
+  #     cpu: "2000m"
 
 hadoop:
   useConfigMap: false
