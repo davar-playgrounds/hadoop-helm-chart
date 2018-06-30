@@ -1,4 +1,5 @@
 # Hadoop Chart
+## 2018 gjyoung1974@gmail.com
 
 [Hadoop](https://hadoop.apache.org/) is a framework for running large scale distributed applications.
 
@@ -11,16 +12,18 @@ This chart is primarily intended to be used for YARN and MapReduce job execution
 To install the chart with the release name `hadoop` that utilizes 50% of the available node resources:
 
 ```
-$ helm install \
-  --name hadoop-1.0.0 \
-  --set image.tag=hadoop-1.0.0  \
-  ./*
-
+$ helm install . --name hadoop-1.0.0 --set image.tag=hadoop-1.0.0
 ```    
 
 port fordwar to the Yarn UI    
 ```
 $ kubectl port-forward hadoop-hadoop-yarn-rm-0 8088:8088
+```
+
+port fordwar to the Zepplin UI    
+```
+$ kubectl --namespace hadoop get pods 
+$ kubectl --namespace hadoop port-forward hadoop-hadoop-zepplin-nn-{unique-value} 8080:8080
 ```
 
 > Note that you need at least 2GB of free memory per NodeManager pod, if your cluster isn't large enough, not all pods will be scheduled.
@@ -71,15 +74,3 @@ The following table lists the configurable parameters of the Hadoop chart and th
 | `persistence.dataNode.storageClass`               | Name of the StorageClass to use per your volume provider                           | `-`                                                              |
 | `persistence.dataNode.accessMode`                 | Access mode for the volume                                                         | `ReadWriteOnce`                                                  |
 | `persistence.dataNode.size`                       | Size of the volume                                                                 | `200Gi`                                                          |
-
-## Related charts
-
-The [Zeppelin Notebook](https://github.com/kubernetes/charts/tree/master/stable/zeppelin) chart can use the hadoop config for the hadoop cluster and use the YARN executor:
-
-```
-helm install --set hadoop.useConfigMap=true stable/zeppelin
-```
-
-# References
-
-- Original K8S Hadoop adaptation this chart was derived from: https://github.com/Comcast/kube-yarn
