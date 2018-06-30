@@ -1,7 +1,8 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: {{ template "hadoop.fullname" . }}
+  name: {{ template "hadoop.fullname" . }}-zepplin-nn
+  namespace: hadoop
   labels:
     app: {{ template "hadoop.name" . }}
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}

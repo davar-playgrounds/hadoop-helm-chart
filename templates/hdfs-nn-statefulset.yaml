@@ -2,6 +2,7 @@ apiVersion: apps/v1beta1
 kind: StatefulSet
 metadata:
   name: {{ template "hadoop.fullname" . }}-hdfs-nn
+  namespace: hadoop
   annotations:
     checksum/config: {{ include (print $.Template.BasePath "/hadoop-configmap.yaml") . | sha256sum }}
   labels:
